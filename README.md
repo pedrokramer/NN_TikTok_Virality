@@ -4,13 +4,16 @@
 ## Bem-vindo(a)!
 
 Esse repositório de GitHub foi desenvolvido na matéria de Redes Neurais e Algoritmos Genéticos no terceiro semestre da faculdade Ilum Escola de Ciência. Matéria essa ministrada pelo professor [Daniel Cassar](https://github.com/drcassar). O trabalho deste repositório é equivalente ao trabalho final da disciplina de Redes Neurais, e fora desenvolvido pelos alunos:
-+ [Pedro Kramer](https://github.com/pedrokramer)
-+ [Iasodara Lima](https://github.com/Iasodara)
-+ [Daniel Bravin](https://github.com/MrBravin)
++ [Pedro Kramer](https://github.com/pedrokramer) - 23013
++ [Iasodara Lima](https://github.com/Iasodara) - 23005
++ [Daniel Bravin](https://github.com/MrBravin) - 23020
 
-### Dados!
-
-[tiktok_dataset.csv](https://github.com/pedrokramer/NN_TikTok_Virality/blob/main/tiktok_dataset.csv) são os dados que utilizamos, disponibilizados no [Kaggle](https://www.kaggle.com/datasets/yakhyojon/tiktok), de engajamento em vídeos do tiktok. Esse dataset contém 19383 exemplos(vídeos) e contém os seguintes atributos:
+<details>
+    
+<summary>Dados!</summary>
+    
+[tiktok_dataset.csv](https://github.com/pedrokramer/NN_TikTok_Virality/blob/main/tiktok_dataset.csv) são os dados que utilizamos, disponibilizados no [Kaggle](https://www.kaggle.com/datasets/yakhyojon/tiktok), de engajamento em vídeos do tiktok. Esse dataset contém 19383 exemplos(vídeos) e contém os seguintes atributos: 
+  
 + claim_status: Se o vídeo é um vídeo de afirmação ou opinião, é uma string que pode conter "claim" ou "opinion" como inputs.
 + video_id: É o número de identificação do vídeo.
 + video_duration_sec: É a duração do vídeo em segundos.
@@ -22,3 +25,23 @@ Esse repositório de GitHub foi desenvolvido na matéria de Redes Neurais e Algo
 + video_download_count: É a contagem de download que um vídeo recebeu. Em inteiro.
 + video_comment_count: É a contagem de comentários que um vídeo recebeu. Em inteiro.
 + video_view_count: Quantidade de visualizações. Nosso target!
+
+
+</p>
+</details>
+
+<details>
+<summary>Processamento de Linguagem Natural</summary>
+  Todo o processo de tratamento de NL (Natural Language) foi feita no arquivo [LSA_COSINES.py](https://github.com/pedrokramer/NN_TikTok_Virality/blob/main/LSA_COSINES.py). Os processos feitos foram os seguintes:
+  
+  ### Tokenização e Bag-of-Words
+  + A tokenização foi feita pela biblioteca 'spacy'. Os tokens passaram por lemmarization: um processo que transforma palavras de mesma origem semântica em uma só, como transformar kissing, kissed, kiss em kiss. Além disso não foram pegadas pontuações ('!', '.', ',' e etc), espaços e stop-words (verbo to be, pronomes, "of", "from").
+  + O processo de tokenização e criação da bag-of-words (BOW) foi simultâneo, a tokenização de cada exemplo criava uma nova chave para o dicionário "cont" que tinha como valor um dicionário que tinha chaves para cada palavra e quantidade que elas aparecem na setença daquele vídeo
+  + Esse processo resulta numa matriz (doc x token) chamada de bag-of-words.
+  + Foi tirado a palavra "moon" porque estava degenerada (tinha correlação com todos os tópicos de LSA, que será visto mais pra frente)
+  + Foi tirado palavras que aparecem menos de 5 vezes que que aparecem mais de 1/1.1 ou aproximadamente 90% dos exemplos
+  ### TF-iDF
+  +
+  ### Latent Semantic Analysis
+  +
+</details>
