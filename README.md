@@ -90,7 +90,13 @@ A rede neural teve sua arquitetura e treinamentos feitos no notebook [Trabalho_R
 + Tem função de perda de MSE
 + Foram definidas duas possíveis funções de ativação: ReLU ou Sigmoid (hiperparâmetro).
 + Tem o otimizador por descida do gradiente com taxa de aprendizado indefinida (hiperparâmetro).
-+ Tem DropOut com taxa de dropout indefinida (hiperparâmetro)
++ Tem DropOut com taxa de dropout indefinida (hiperparâmetro).
++ Outros hiperparâmetros são a quantidade de camadas e de neurônios por camada.
+
+  ### Treinamento Otimizado da Rede e busca de melhores hiperparâmetros
+  + A backpropragation é feito com 1000 épocas. Foi usado a biblioteca Pytorch.
+  + Para encontrar os melhores hiperparâmetros foi usado o Optuna. Foi feito um estudo de Optuna que fez 500 tentativas com MSE como métrica para minimizar, essa escolha por busca em grade
+ + Melhor arquitetura encontrada explicitada no notebook [Trabalho_REDES.ipynb](https://github.com/pedrokramer/NN_TikTok_Virality/blob/main/Trabalho_REDES.ipynb).
 </p>
 </details>
 
