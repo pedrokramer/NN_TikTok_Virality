@@ -54,8 +54,11 @@ Esse repositório de GitHub foi desenvolvido na matéria de Redes Neurais e Algo
   + Latent Semantic Analysis (LSA) ou Análise latente de semântica é um processo de criação de tópicos que tenta separar palavras em tópicos por meio de decomposição SVD da matriz transposta da BOW pós TF-iDF
   + A decomposição SVD usada foi o [Truncated SVD](https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.TruncatedSVD.html) do Scikit Learn, com o máximo de 100 composições
   + A matriz importante do SVD é a matriz U, que ao receber uma matriz BOW transposta (token X doc) devolve uma matriz token x 'token'. Entretanto, pela maneira que é organizado a matriz U do SVD funciona, as colunas perdem o significado de token ganhado dando valores de correlação dos tokens (linhas) com esse tópico indefinido.
+  + Obs: Pela maneira que o SVD decompõe, os tópicos ficam em ordem de maior variância e menos degeneração de palavras, ou seja, a medida que os tópicos (colunas) vão passando, maior será a repetição de palavras entre os tópicos levando a tópicos sem variância entre si
+  + Obs 2: Esses tópicos podem ser vistos como vetores num hiperplano onde cada token se torna uma base
+  + 
 
-### 
+### Semelhança de Cossenos
 
 
 </p>
