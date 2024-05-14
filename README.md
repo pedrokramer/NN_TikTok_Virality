@@ -53,13 +53,44 @@ Esse repositório de GitHub foi desenvolvido na matéria de Redes Neurais e Algo
   ### Latent Semantic Analysis
   + Latent Semantic Analysis (LSA) ou Análise latente de semântica é um processo de criação de tópicos que tenta separar palavras em tópicos por meio de decomposição SVD da matriz transposta da BOW pós TF-iDF
   + A decomposição SVD usada foi o [Truncated SVD](https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.TruncatedSVD.html) do Scikit Learn, com o máximo de 100 composições
-  + A matriz importante do SVD é a matriz U, que ao receber uma matriz BOW transposta (token X doc) devolve uma matriz token x 'token'. Entretanto, pela maneira que é organizado a matriz U do SVD funciona, as colunas perdem o significado de token ganhado dando valores de correlação dos tokens (linhas) com esse tópico indefinido.
+  + A matriz importante do SVD é a matriz U, que ao receber uma matriz BOW transposta (token X doc) devolve uma matriz token x 'token'. Entretanto, pela maneira que é organizado a matriz U do SVD funciona, as colunas perdem o significado de token ganhado dando valores de correlação dos tokens (linhas) com esse tópico indefinido. A matriz que representa a U (token x tópico) está salva como [U_SVD_tktk_.1.csv](https://github.com/pedrokramer/NN_TikTok_Virality/blob/main/U_SVD_tktk_.1.csv).
+  + Pegando apenas as 10 palavras com maiores valores de cada tópico, foi feita uma matriz palavra(10) por tópico(100) chamada [Word_Vects_tktk_1.1.csv](https://github.com/pedrokramer/NN_TikTok_Virality/blob/main/Word_Vects_tktk_1.1.csv). Essa matriz é importante para ter uma ideia sobre o que cada tópico trata. Ela não é utilizada para outros fins além de análise visual.
   + Obs: Pela maneira que o SVD decompõe, os tópicos ficam em ordem de maior variância e menos degeneração de palavras, ou seja, a medida que os tópicos (colunas) vão passando, maior será a repetição de palavras entre os tópicos levando a tópicos sem variância entre si
-  + Obs 2: Esses tópicos podem ser vistos como vetores num hiperplano onde cada token se torna uma base
-  + 
+  + Obs 2: Esses tópicos podem ser vistos como vetores num hiperplano onde cada token se torna uma base desse espaço
 
-### Semelhança de Cossenos
+ ### Semelhança de Cossenos
+Para fins de treino da Rede Neural, usar o valor de TF-iDF como um atributo de treinamento seria muito custoso, já que após a tokenização havia 568 tokens, e cada um deveria ser um dado de entrada. Então a maneira de solucionar isso foi tirando a semelhança de cosseno de cada descrição de vídeo, ou seja, cada linha da BOW com os 10 primeiros tópicos. (Essa escolha de tópicos foi arbritária, sob orientação do Prof. Amauri Jardim de Paula. Isso porque os tópicos, geralmente, após o 10º se tornam muito degenerados entre si). Os passos tomados então foram:
++ Pegar cada linha da matriz TF-iDF e calcular a semelhança de cosseno dos 10 primeiros tópicos da matriz transposta da matriz U (É necessário que seja a matriz U seja transposta para que ela fique em tópicos x token, para que as arrays que formam essa matriz tenham as mesmas dimensões as arrays da matriz TF-iDF [doc x token], assim a comparar linha por linha elas teram as mesmas dimensões)
++ Com todas as semelhanças de cosseno feitas entre as arrays de TF-iDF e 10ºs Tópicos, elas são normalizadas por max-mean e adicionadas no dataset com os outros atributos e targets chamado [tiktok_nlp_data.csv](https://github.com/pedrokramer/NN_TikTok_Virality/blob/main/tiktok_nlp_data.csv)
 
 
 </p>
 </details>
+
+<details>
+<summary>Tratamento dos Dados</summary>
+
+Os seguintes tratamentos feitos no notebook [data_tiktok_treat.ipynb](https://github.com/pedrokramer/NN_TikTok_Virality/blob/main/data_tiktok_treat.ipynb) foram:
+
++ Os dados de 'claim_status' e 'verified_status' foram transformados em binário, 'claim' -> 1 e 'opinion' -> 0; 'verified' -> 1 e 'not verified' -> 0.
++ 'author_ban_status' passou por um processo de [OneHotEnconder](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html) do Scikit Learn.
++ 'video_duration_sec','video_view_count', 'video_like_count', 'video_share_count', 'video_download_count' e 'video_comment_count' tiveram seus valores normalizados pelo [MaxAbsScaler](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MaxAbsScaler.html) do Scikit Learn
++ Todas alterações foram salvas em um arquivo csv chamado [tiktok_treated_data.csv](https://github.com/pedrokramer/NN_TikTok_Virality/blob/main/tiktok_treated_data.csv).
+
+</p>
+</details>
+
+<details>
+<summary>Rede Neural</summary>
+
+A rede neural teve sua arquitetura e treinamentos feitos no notebook [Trabalho_REDES.ipynb](https://github.com/pedrokramer/NN_TikTok_Virality/blob/main/Trabalho_REDES.ipynb).
+
+### Arquitetura da Rede
++ A rede é uma MLP (Multilayer Perceptron) e teve suas combinações de arquiteturas possíveis definidas na classe de python 'view_predictor_MLP'. Foi utilizado pytorch para esse processo
++ Tem função de perda de MSE
++ Foram definidas duas possíveis funções de ativação: ReLU ou Sigmoid (hiperparâmetro).
++ Tem o otimizador por descida do gradiente com taxa de aprendizado indefinida (hiperparâmetro).
++ Tem DropOut com taxa de dropout indefinida (hiperparâmetro)
+</p>
+</details>
+
