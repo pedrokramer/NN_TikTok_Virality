@@ -63,6 +63,7 @@ Para fins de treino da Rede Neural, usar o valor de TF-iDF como um atributo de t
 + Pegar cada linha da matriz TF-iDF e calcular a semelhança de cosseno dos 10 primeiros tópicos da matriz transposta da matriz U (É necessário que seja a matriz U seja transposta para que ela fique em tópicos x token, para que as arrays que formam essa matriz tenham as mesmas dimensões as arrays da matriz TF-iDF [doc x token], assim a comparar linha por linha elas teram as mesmas dimensões)
 + Com todas as semelhanças de cosseno feitas entre as arrays de TF-iDF e 10ºs Tópicos, elas são normalizadas por max-mean e adicionadas no dataset com os outros atributos e targets chamado [tiktok_nlp_data.csv](https://github.com/pedrokramer/NN_TikTok_Virality/blob/main/tiktok_nlp_data.csv)
 
+<img src="https://github.com/pedrokramer/NN_TikTok_Virality/blob/main/NLP.png?raw=true" alt="esquema_a" width="800"/>
 
 </p>
 </details>
